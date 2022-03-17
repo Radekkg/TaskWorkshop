@@ -19,28 +19,7 @@ public class TaskMenager {
     static String[][] taskArray;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        File file = new File("tasks.csv");
-        taskArray = new String[0][3];
-
-        try (Scanner fileScanner = new Scanner(file)) {
-            while (fileScanner.hasNextLine()) {
-                String textLine = fileScanner.nextLine();
-
-                String[] splitLine = textLine.split(",");
-
-                taskArray = Arrays.copyOf(taskArray, taskArray.length + 1);
-                taskArray[taskArray.length - 1] = new String[3];
-
-                taskArray[taskArray.length - 1][0] = splitLine[0].trim();
-                taskArray[taskArray.length - 1][1] = splitLine[1].trim();
-                taskArray[taskArray.length - 1][2] = splitLine[2].trim();
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Nie znaleziono pliku");
-            e.getMessage();
-        }
+        Scanner scanner = initProgram();
         boolean quitProgram = true;
 
 
@@ -68,6 +47,32 @@ public class TaskMenager {
                     System.out.println("Please select a correct option.");
             }
         }
+    }
+
+    private static Scanner initProgram() {
+        Scanner scanner = new Scanner(System.in);
+        File file = new File("tasks.csv");
+        taskArray = new String[0][3];
+
+        try (Scanner fileScanner = new Scanner(file)) {
+            while (fileScanner.hasNextLine()) {
+                String textLine = fileScanner.nextLine();
+
+                String[] splitLine = textLine.split(",");
+
+                taskArray = Arrays.copyOf(taskArray, taskArray.length + 1);
+                taskArray[taskArray.length - 1] = new String[3];
+
+                taskArray[taskArray.length - 1][0] = splitLine[0].trim();
+                taskArray[taskArray.length - 1][1] = splitLine[1].trim();
+                taskArray[taskArray.length - 1][2] = splitLine[2].trim();
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Nie znaleziono pliku");
+            e.getMessage();
+        }
+        return scanner;
     }
 
     private static void quitTask() {
